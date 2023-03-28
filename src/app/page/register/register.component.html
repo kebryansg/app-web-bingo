@@ -1,0 +1,80 @@
+<div class="row">
+  <div class="col-md-3">
+    <form [formGroup]="formItem" (ngSubmit)="registroTabla()">
+      <div class="mb-3">
+        <label class="form-label font-weight-bold">
+          Código Tabla
+        </label>
+        <dx-text-box formControlName="codTabla"></dx-text-box>
+      </div>
+      <div class="mb-3">
+        <label class="form-label font-weight-bold">
+          Tipo Tabla
+        </label>
+        <dx-select-box [items]="tipoTabla"
+                       formControlName="tipoTabla"
+        ></dx-select-box>
+      </div>
+
+      <div class="d-flex gap-2">
+        <button type="reset"
+                class="btn btn-default">
+          Limpiar
+        </button>
+        <button type="submit"
+                [ngClass]="{'btn-disabled': formItem.invalid}"
+                [disabled]="formItem.invalid"
+                class="btn btn-primary">
+          Guardar
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+
+<div class="row mt-3">
+  <div class="col-md-12">
+    <dx-data-grid [dataSource]="tabla"
+                  keyExpr="ID"
+                  [columnMinWidth]="70"
+                  (onFocusedCellChanging)="onFocusedCellChanging($event)"
+                  [showBorders]="true">
+      <dxo-keyboard-navigation [editOnKeyPress]="true"
+                               [enterKeyAction]="'moveFocus'"
+                               [enterKeyDirection]="'column'"
+      ></dxo-keyboard-navigation>
+      <dxo-paging [enabled]="false"></dxo-paging>
+      <dxo-editing mode="cell"
+                   [allowUpdating]="true"
+                   startEditAction="dblClick"
+      ></dxo-editing>
+      <dxi-column dataField="a"
+                  dataType="number"
+                  alignment="center"
+                  caption="B"
+      ></dxi-column>
+      <dxi-column dataField="b"
+                  dataType="number"
+                  alignment="center"
+                  caption="I"
+      ></dxi-column>
+      <dxi-column dataField="c"
+                  dataType="number"
+                  alignment="center"
+                  caption="N"
+      ></dxi-column>
+      <dxi-column dataField="d"
+                  dataType="number"
+                  alignment="center"
+                  caption="G"
+      ></dxi-column>
+      <dxi-column dataField="e"
+                  dataType="number"
+                  alignment="center"
+                  caption="O"
+      ></dxi-column>
+    </dx-data-grid>
+  </div>
+</div>

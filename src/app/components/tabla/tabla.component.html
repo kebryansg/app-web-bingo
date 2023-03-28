@@ -1,0 +1,24 @@
+<div class="w-100 d-flex justify-content-between align-items-center mt-3 mb-2">
+  <label class="text-danger font-weight-bold f-14">{{codTabla}}</label>
+
+  <div>
+    <i class="fa fa-edit fa-2x cursor-pointer text-primary me-2"
+       [routerLink]="['/register',codTabla]"
+    ></i>
+    <i class="fa fa-trash fa-2x cursor-pointer text-danger "
+       (click)="deleteTabla()"
+    ></i>
+  </div>
+
+</div>
+
+<div class="tabla">
+  <div class="tabla-numero"
+       *ngFor="let num of nums; let idx = index"
+       [class.tabla-numero-is]="playService.numbersPlayed.isSelected(num)">
+    {{num}}
+  </div>
+</div>
+<div class="w-100">
+  Letra ->
+</div>

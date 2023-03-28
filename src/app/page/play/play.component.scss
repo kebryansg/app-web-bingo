@@ -1,0 +1,33 @@
+.content-table {
+  display: grid;
+  gap: 2rem;
+  grid-auto-rows: 22rem;
+  grid-template-columns: repeat( auto-fill, minmax(min(100%, 18rem), 1fr) );
+}
+
+.content-letter {
+
+  display: grid;
+  gap: 1rem;
+  grid-auto-rows: 2.5rem;
+  grid-template-columns: repeat( auto-fill, minmax(min(100%, 2.5rem), 1fr) );
+  padding: 10px 0;
+
+  .letter {
+    cursor: pointer;
+    padding: 9px 5px;
+    text-align: center;
+    border: 1px solid #0d69db;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 500;
+
+    &:hover {
+      background-color: #0d69db;
+      color: #eeeeee;
+      border: 1px solid #eeeeee;
+    }
+  }
+}
+
+

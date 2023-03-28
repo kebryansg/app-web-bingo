@@ -1,0 +1,30 @@
+:host {
+  max-width: 250px;
+}
+.tabla {
+  width: 100%;
+  border: 1px solid #327ed2;
+  padding: 8px;
+  border-radius: 10px;
+
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+
+  .tabla-numero {
+    cursor: pointer;
+    font-size: 25px;
+    font-weight: bold;
+    border: 1px solid #403f3f;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+  }
+
+  .tabla-numero-is{
+    background-color: #bbbb39;
+
+  }
+}

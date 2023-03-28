@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col">
+
+    <div class="tab">
+      <!-- Active tab -->
+      <div class="tab__item"
+           routerLinkActive="tab__item--active">
+        <a routerLink="numbers-played">
+          Núm Jugados
+        </a>
+      </div>
+
+      <div class="tab__item"
+           routerLinkActive="tab__item--active">
+        <a routerLink="register">
+          Registrar
+        </a>
+      </div>
+
+      <!-- Inactive tab -->
+      <div class="tab__item"
+           routerLinkActive="tab__item--active">
+        <a routerLink="play">
+          Tablas
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="mt-3 row">
+  <div class="col">
+    <router-outlet></router-outlet>
+  </div>
+</div>

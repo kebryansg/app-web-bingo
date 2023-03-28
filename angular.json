@@ -30,6 +30,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/devextreme/dist/css/dx.carmine.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -68,6 +69,7 @@
               "browserTarget": "app-play-bingo:build:production"
             },
             "development": {
+              "port": 4202,
               "browserTarget": "app-play-bingo:build:development"
             }
           },
