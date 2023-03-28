@@ -65,6 +65,10 @@ export class TablaComponent implements OnInit, OnDestroy {
       && positions[letra].sort().join(',') == position.join(',')
   }
 
+  trackByNumber(item:number){
+    return item
+  }
+
 }
 
 

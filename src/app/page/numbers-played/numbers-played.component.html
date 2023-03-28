@@ -1,23 +1,13 @@
-<div class="row">
+<h3>
+  Total números jugados: {{ playService.selectionModel.selected.length  }}
+</h3>
 
-  <div class="col">
+<section class="container-numbers mt-4">
 
-
-    <h3>
-      Total números jugados {{ playService.selectionModel.selected.length  }}
-    </h3>
-
-    <section class="container-numbers">
-
-      <div *ngFor="let num of numbersAll"
-           class="number"
-           [class.number--active]="playService.selectionModel.isSelected(num)"
-           (click)="pushSelect(num)">
-        {{num}}
-      </div>
-    </section>
-
+  <div *ngFor="let num of numbersAll"
+       class="number"
+       [class.number--active]="playService.selectionModel.isSelected(num)"
+       (click)="pushSelect(num)">
+    {{num}}
   </div>
-
-
-</div>
+</section>

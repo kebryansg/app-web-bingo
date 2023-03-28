@@ -14,7 +14,7 @@
 
 <div class="tabla">
   <div class="tabla-numero"
-       *ngFor="let num of nums; let idx = index"
+       *ngFor="let num of nums; trackBy: trackByNumber"
        [class.tabla-numero-is]="playService.numbersPlayed.isSelected(num)">
     {{num}}
   </div>
