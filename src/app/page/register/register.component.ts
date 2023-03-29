@@ -65,6 +65,7 @@ export class RegisterComponent implements OnInit {
     this.formItem.reset({
       tipoTabla: 'Normal'
     })
+    this.tabla = []
     this.setDataDefault()
   }
 

@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
-import {Observable, of, Subject} from "rxjs";
-import {map, startWith, switchMap} from "rxjs/operators";
+import {BehaviorSubject, Observable, of, pluck} from "rxjs";
+import {map} from "rxjs/operators";
 import {LocalStorageService} from "./local-storage.service";
+import {SelectionModel} from "@angular/cdk/collections";
 
-const STORAGE_LETJUG = 'letJug'
-const letras: letraBingo[] = ["T"
+const STORAGE_LETJUG: string = 'letJug'
+const letras: LetraBingo[] = ["T"
   , "L"
   , "C"
   , "A"
@@ -22,8 +23,10 @@ const letras: letraBingo[] = ["T"
 })
 export class LetraPlayService {
 
-  private letraOut: letraBingo[] = []
-  private sbjLetterOut$: Subject<letraBingo[]> = new Subject()
+
+  private lettersPlayed = new SelectionModel<LetraBingo>(true)
+
+  private sbjAvailableLetters: BehaviorSubject<LetraBingo[]> = new BehaviorSubject<LetraBingo[]>([...letras])
 
   constructor(private storageService: LocalStorageService) {
   }
@@ -34,44 +37,42 @@ export class LetraPlayService {
   }
 
   setDataStorage() {
-    this.storageService.set(STORAGE_LETJUG, this.letraOut)
-    console.log('Save Letter Out', JSON.stringify(this.letraOut))
+    this.storageService.set(STORAGE_LETJUG, this.lettersPlayed.selected)
   }
 
-  setLetraPlay(letra: letraBingo) {
-    this.letraOut = [...this.letraOut, letra]
-    this.setDataStorage()
-    // this.sbjLetterOut$.next()
-  }
-
-  get letras(): letraBingo[] {
-    if (this.letraOut.length <= 0)
-      return [...letras]
-
-    return letras.filter(this._filter)
-  }
-
-  get obsLetras$(): Observable<letraBingo[]> {
-
-    return this.sbjLetterOut$
+  get lettersPlayed$(): Observable<LetraBingo[]> {
+    return this.lettersPlayed.changed.asObservable()
       .pipe(
-        startWith(letras),
-        switchMap(() => of(letras)),
-        map(l1 => l1.filter(this._filter))
+        pluck('source', 'selected')
       )
-
-    /*return of(letras)
-      .pipe(
-        map(l1 => l1.filter(item => !this.getDataStore().some(l2 => item == l2)))
-      )*/
   }
 
-  _filter = (item: any) => !this.getDataStore().some(l2 => item == l2)
+  get selectionModel(): SelectionModel<LetraBingo> {
+    return this.lettersPlayed
+  }
+
+  setLetterPlayed(letra: LetraBingo) {
+    this.lettersPlayed.toggle(letra)
+    this.setDataStorage()
+  }
+
+  get lettersAll$(): Observable<LetraBingo[]> {
+    return of([...letras])
+  }
+
+  get availableLetters$(): Observable<LetraBingo[]> {
+    return this.sbjAvailableLetters.asObservable()
+      .pipe(
+        map(letters =>
+          letters.filter(letter => !this.lettersPlayed.isSelected(letter))
+        )
+      )
+  }
 
 }
 
 
-export type letraBingo = "T"
+export type LetraBingo = "T"
   | "L"
   | "C"
   | "A"

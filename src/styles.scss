@@ -76,3 +76,19 @@ table {
     gap: 30px;
   }
 }
+
+
+.button-with-icon {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: .25rem;
+  width: 8rem;
+}
+
+.button-with-icon__label {
+  margin-left: 0.5rem;
+}

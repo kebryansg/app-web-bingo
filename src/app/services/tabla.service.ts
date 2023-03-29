@@ -1,15 +1,18 @@
 import {Injectable} from '@angular/core';
 import {LocalStorageService} from "./local-storage.service";
 import {Table, TableStorage} from "../interfaces/table.interface";
+import {BehaviorSubject} from "rxjs";
 
-const STORAGE_KEY = 'TABLA_KEY'
+const STORAGE_KEY: string = 'TABLA_KEY'
 
 @Injectable({
   providedIn: 'root'
 })
 export class TablaService {
 
-  tables = new Map<string, TableStorage>()
+  tables: Map<string, TableStorage> = new Map<string, TableStorage>()
+
+  private sbjAvailableTables: BehaviorSubject<Table[]> = new BehaviorSubject<Table[]>([])
 
   constructor(private storageService: LocalStorageService,) {
   }
@@ -41,12 +44,17 @@ export class TablaService {
 
   getTables(): Table[] {
     return [...this.tables.entries()]
-      .map(([key, value]) =>
+      .map(([key, {tipoTabla, data}]) =>
         ({
           codTabla: key,
-          ...value
+          tipoTabla,
+          data: mapItems(data)
         })
       )
   }
 
 }
+
+const mapItems = (items: any[]): number[] => items.map((item: any) => {
+  return [item['a'], item['b'], item['c'], item['d'], item['e'],]
+}).flat()

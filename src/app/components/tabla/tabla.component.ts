@@ -1,9 +1,8 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, inject, Input, OnDestroy, OnInit} from '@angular/core';
 import {LETTER_POSITION} from '../../const/letters-position.const';
-import {letraBingo, LetraPlayService} from "../../services/letra-play.service";
+import {LetraBingo, LetraPlayService} from "../../services/letra-play.service";
 import {PlayService} from "../../services/play.service";
-import {SelectionModel} from "@angular/cdk/collections";
-import {Subject, takeUntil} from "rxjs";
+import {Subject, switchMap, tap} from "rxjs";
 import {TablaService} from "../../services/tabla.service";
 
 @Component({
@@ -20,10 +19,9 @@ export class TablaComponent implements OnInit, OnDestroy {
 
   destroy$ = new Subject<boolean>()
 
-  constructor(public playService: PlayService,
-              private tablaService: TablaService,
-              private letraPlayService: LetraPlayService,) {
-  }
+  public playService: PlayService = inject(PlayService)
+  tablaService: TablaService = inject(TablaService)
+  letraPlayService: LetraPlayService = inject(LetraPlayService)
 
   ngOnDestroy() {
     this.destroy$.next(true)
@@ -32,8 +30,12 @@ export class TablaComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.playService.numJugads$
+      .pipe(
+        switchMap(() => this.letraPlayService.availableLetters$),
+        tap(console.log),
+      )
       .subscribe({
-        next: () => this.comprobarTabla()
+        next: (letters) => this.comprobarTabla(letters)
       })
   }
 
@@ -41,8 +43,9 @@ export class TablaComponent implements OnInit, OnDestroy {
     this.tablaService.deleteTable(this.codTabla)
   }
 
-  comprobarTabla() {
-    for (let letra of this.letraPlayService.letras) {
+  comprobarTabla(lettersPlayed: LetraBingo[]) {
+    console.log(lettersPlayed)
+    for (let letra of lettersPlayed) {
       const isValid = this.comprobarLetra(letra)
       if (isValid) {
         this.letra = letra
@@ -51,7 +54,7 @@ export class TablaComponent implements OnInit, OnDestroy {
     }
   }
 
-  comprobarLetra(letra: letraBingo): boolean {
+  comprobarLetra(letra: LetraBingo): boolean {
     const positions = {
       ...LETTER_POSITION
     }
@@ -65,7 +68,7 @@ export class TablaComponent implements OnInit, OnDestroy {
       && positions[letra].sort().join(',') == position.join(',')
   }
 
-  trackByNumber(item:number){
+  trackByNumber(item: number) {
     return item
   }
 

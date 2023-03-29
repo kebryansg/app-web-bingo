@@ -22,6 +22,12 @@
     font-size: 1rem;
     font-weight: 500;
 
+    &--active {
+      background-color: #0d69db;
+      color: #eeeeee;
+      border: 1px solid #eeeeee;
+    }
+
     &:hover {
       background-color: #0d69db;
       color: #eeeeee;

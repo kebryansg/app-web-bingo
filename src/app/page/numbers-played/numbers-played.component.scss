@@ -9,6 +9,8 @@
   cursor: pointer;
   border-radius: 50%;
   border: 1px solid #2b3035;
+  font-size: 22px;
+  font-weight: bold;
 
   display: flex;
   justify-content: center;
@@ -17,7 +19,6 @@
   &--active {
     background-color: #0a58ca;
     color: white;
-    font-weight: bold;
   }
 
 }

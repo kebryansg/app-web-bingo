@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
-import {map, tap} from "rxjs/operators";
+import {map} from "rxjs/operators";
 import {LocalStorageService} from "./local-storage.service";
 import {SelectionModel} from "@angular/cdk/collections";
 
@@ -23,7 +23,7 @@ export class PlayService {
     return (numJug ?? []).map(item => +item)
   }
 
-  loadData(){
+  loadData() {
     this.numbersPlayed.select(...this.getDataStore())
   }
 
@@ -36,13 +36,6 @@ export class PlayService {
       .pipe(
         map(data => data.source.selected)
       )
-
-    // return this.sbjNumJugados$
-    //   .pipe(
-    //     map(() => this.getDataStore()),
-    //     // tap(console.log),
-    //     tap(ls => this.numJugados = ls),
-    //   )
   }
 
   get selectionModel(): SelectionModel<number> {

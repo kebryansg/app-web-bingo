@@ -7,9 +7,9 @@ import {RegisterComponent} from "./page/register/register.component";
 import {PlayComponent} from "./page/play/play.component";
 import {DxDataGridModule, DxListModule, DxPopupModule, DxSelectBoxModule, DxTextBoxModule} from "devextreme-angular";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {TabsControlComponent} from './page/tabs-control/tabs-control.component';
+import {NumbersPlayedComponent} from './page/numbers-played/numbers-played.component';
 import {TablaComponent} from "./components/tabla/tabla.component";
-import { TabsControlComponent } from './page/tabs-control/tabs-control.component';
-import { NumbersPlayedComponent } from './page/numbers-played/numbers-played.component';
 
 @NgModule({
   declarations: [
