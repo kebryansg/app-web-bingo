@@ -1,10 +1,9 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
-import {map} from "rxjs/operators";
 import {LocalStorageService} from "./local-storage.service";
 import {SelectionModel} from "@angular/cdk/collections";
 
-const STORAGE_NUMJUG = 'numJug'
+const STORAGE_NUMJUG: string = 'numJug'
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +24,7 @@ export class PlayService {
 
   loadData() {
     this.numbersPlayed.select(...this.getDataStore())
+    this.sbjNumJugados$.next(this.getDataStore())
   }
 
   setDataStorage() {
@@ -32,10 +32,7 @@ export class PlayService {
   }
 
   get numJugads$(): Observable<number[]> {
-    return this.numbersPlayed.changed.asObservable()
-      .pipe(
-        map(data => data.source.selected)
-      )
+    return this.sbjNumJugados$.asObservable()
   }
 
   get selectionModel(): SelectionModel<number> {

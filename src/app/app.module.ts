@@ -5,7 +5,14 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {RegisterComponent} from "./page/register/register.component";
 import {PlayComponent} from "./page/play/play.component";
-import {DxDataGridModule, DxListModule, DxPopupModule, DxSelectBoxModule, DxTextBoxModule} from "devextreme-angular";
+import {
+  DxButtonModule,
+  DxDataGridModule,
+  DxListModule,
+  DxPopupModule,
+  DxSelectBoxModule,
+  DxTextBoxModule, DxValidatorModule
+} from "devextreme-angular";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {TabsControlComponent} from './page/tabs-control/tabs-control.component';
 import {NumbersPlayedComponent} from './page/numbers-played/numbers-played.component';
@@ -29,7 +36,8 @@ import {TablaComponent} from "./components/tabla/tabla.component";
     DxListModule,
     DxPopupModule,
     DxSelectBoxModule,
-    DxTextBoxModule
+    DxTextBoxModule,
+    DxButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

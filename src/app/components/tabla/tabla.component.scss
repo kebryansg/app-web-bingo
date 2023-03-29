@@ -13,7 +13,7 @@
   grid-column-gap: 10px;
   grid-row-gap: 10px;
 
-  &-numero {
+  &__number {
     width: 40px;
     cursor: pointer;
     font-size: 25px;
@@ -22,10 +22,10 @@
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
+
+    &--is {
+      background-color: #bbbb39;
+    }
   }
 
-  &-numero-is {
-    background-color: #bbbb39;
-
-  }
 }

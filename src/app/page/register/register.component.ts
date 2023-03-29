@@ -54,6 +54,10 @@ export class RegisterComponent implements OnInit {
   }
 
   async registroTabla() {
+    this.formItem.markAllAsTouched()
+
+    if(this.formItem.invalid) return
+
     let {codTabla, tipoTabla} = this.formItem.getRawValue()
 
     codTabla = codTabla.includes('dtb') ? codTabla : 'dtb_' + codTabla

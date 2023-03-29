@@ -17,8 +17,10 @@
 
 </section>
 <div class="mt-4 content-table">
-  <app-tabla *ngFor="let tabla of tablesGame"
-             [nums]="tabla.data"
+  <app-tabla *ngFor="let tabla of (tablesGame$ | async); trackBy:trackByTable"
+             [nums]="tabla.numbers"
              [codTabla]="tabla.codTabla"
+             (onEdit)="onEdit($event)"
+             (onDelete)="onDelete($event)"
   ></app-tabla>
 </div>

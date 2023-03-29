@@ -1,24 +1,26 @@
 <div class="w-100 d-flex justify-content-between align-items-center mt-3 mb-2">
-  <label class="text-danger font-weight-bold f-14">{{codTabla}}</label>
+  <label class="text-danger font-weight-bold f-14">
+    # {{codeTable}}
+  </label>
 
   <div>
     <i class="fa fa-edit fa-2x cursor-pointer text-primary me-2"
-       [routerLink]="['/register',codTabla]"
+       (click)="onEdit.emit(codTabla)"
     ></i>
     <i class="fa fa-trash fa-2x cursor-pointer text-danger "
-       (click)="deleteTabla()"
+       (click)="onDelete.emit(codTabla)"
     ></i>
   </div>
 
 </div>
 
 <div class="tabla">
-  <div class="tabla-numero"
+  <div class="tabla__number"
        *ngFor="let num of nums; trackBy: trackByNumber"
-       [class.tabla-numero-is]="playService.numbersPlayed.isSelected(num)">
-    {{num}}
+       [class.tabla__number--is]="num.isSelected">
+    {{num.displayNumber}}
   </div>
 </div>
 <div class="w-100">
-  Letra ->
+  Letra -> {{ lettersPlayed$ | async}}
 </div>

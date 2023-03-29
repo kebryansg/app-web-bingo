@@ -5,7 +5,7 @@ import {LocalStorageService} from "./local-storage.service";
 import {SelectionModel} from "@angular/cdk/collections";
 
 const STORAGE_LETJUG: string = 'letJug'
-const letras: LetraBingo[] = ["T"
+const LETRAS: LetraBingo[] = ["T"
   , "L"
   , "C"
   , "A"
@@ -26,13 +26,17 @@ export class LetraPlayService {
 
   private lettersPlayed = new SelectionModel<LetraBingo>(true)
 
-  private sbjAvailableLetters: BehaviorSubject<LetraBingo[]> = new BehaviorSubject<LetraBingo[]>([...letras])
+  private sbjAvailableLetters: BehaviorSubject<LetraBingo[]> = new BehaviorSubject<LetraBingo[]>([...LETRAS])
 
   constructor(private storageService: LocalStorageService) {
   }
 
-  getDataStore(): number[] {
-    let letJug: number[] = this.storageService.get<number[]>(STORAGE_LETJUG)
+  loadDataStore(): void {
+    this.lettersPlayed.select(...this.getDataStore())
+  }
+
+  getDataStore(): LetraBingo[] {
+    let letJug: LetraBingo[] = this.storageService.get<LetraBingo[]>(STORAGE_LETJUG)
     return letJug ?? []
   }
 
@@ -40,24 +44,18 @@ export class LetraPlayService {
     this.storageService.set(STORAGE_LETJUG, this.lettersPlayed.selected)
   }
 
-  get lettersPlayed$(): Observable<LetraBingo[]> {
-    return this.lettersPlayed.changed.asObservable()
-      .pipe(
-        pluck('source', 'selected')
-      )
+  setLetterPlayed(letra: LetraBingo) {
+    this.lettersPlayed.toggle(letra)
+    this.sbjAvailableLetters.next([...LETRAS])
+    this.setDataStorage()
   }
 
   get selectionModel(): SelectionModel<LetraBingo> {
     return this.lettersPlayed
   }
 
-  setLetterPlayed(letra: LetraBingo) {
-    this.lettersPlayed.toggle(letra)
-    this.setDataStorage()
-  }
-
   get lettersAll$(): Observable<LetraBingo[]> {
-    return of([...letras])
+    return of([...LETRAS])
   }
 
   get availableLetters$(): Observable<LetraBingo[]> {

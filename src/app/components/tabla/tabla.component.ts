@@ -1,71 +1,50 @@
-import {Component, inject, Input, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output} from '@angular/core';
 import {LETTER_POSITION} from '../../const/letters-position.const';
 import {LetraBingo, LetraPlayService} from "../../services/letra-play.service";
 import {PlayService} from "../../services/play.service";
-import {Subject, switchMap, tap} from "rxjs";
-import {TablaService} from "../../services/tabla.service";
+import {combineLatest} from "rxjs";
+import {ItemNumber} from "../../interfaces/table.interface";
+import {map} from "rxjs/operators";
+import {getIntersection} from "../../utils/array.util";
 
 @Component({
   selector: 'app-tabla',
   templateUrl: './tabla.component.html',
-  styleUrls: ['./tabla.component.scss']
+  styleUrls: ['./tabla.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TablaComponent implements OnInit, OnDestroy {
+export class TablaComponent {
 
-  @Input() nums!: number[]
+  @Input() nums: ItemNumber[] = []
   @Input() codTabla!: string
 
-  letra!: string;
+  @Output() onEdit: EventEmitter<string> = new EventEmitter<string>()
+  @Output() onDelete: EventEmitter<string> = new EventEmitter<string>()
 
-  destroy$ = new Subject<boolean>()
 
-  public playService: PlayService = inject(PlayService)
-  tablaService: TablaService = inject(TablaService)
+  playService: PlayService = inject(PlayService)
   letraPlayService: LetraPlayService = inject(LetraPlayService)
 
-  ngOnDestroy() {
-    this.destroy$.next(true)
-    this.destroy$.unsubscribe()
-  }
-
-  ngOnInit(): void {
-    this.playService.numJugads$
+  get lettersPlayed$() {
+    return combineLatest([
+      this.playService.numJugads$,
+      this.letraPlayService.availableLetters$
+    ], (numberOut, lettersPlayed) => lettersPlayed)
       .pipe(
-        switchMap(() => this.letraPlayService.availableLetters$),
-        tap(console.log),
+        map((lettersPlayed) => lettersPlayed.filter(letter => this.compareLetra(letter))),
       )
-      .subscribe({
-        next: (letters) => this.comprobarTabla(letters)
-      })
   }
 
-  async deleteTabla() {
-    this.tablaService.deleteTable(this.codTabla)
+  get codeTable() {
+    return `${this.codTabla.split('_')[1]}`
   }
 
-  comprobarTabla(lettersPlayed: LetraBingo[]) {
-    console.log(lettersPlayed)
-    for (let letra of lettersPlayed) {
-      const isValid = this.comprobarLetra(letra)
-      if (isValid) {
-        this.letra = letra
-        break
-      }
-    }
-  }
+  compareLetra(letra: LetraBingo): boolean {
 
-  comprobarLetra(letra: LetraBingo): boolean {
-    const positions = {
-      ...LETTER_POSITION
-    }
-    const position = this.nums.map((num, index) =>
-      this.playService.numbersPlayed.isSelected(num) ? index : -1
-    )
-      .filter(num => num != -1)
-      .sort()
+    const positionsTable = this.nums.filter(item => item.isSelected)
+      .map(item => item.position);
 
-    return position.length == positions[letra].length
-      && positions[letra].sort().join(',') == position.join(',')
+    return getIntersection(LETTER_POSITION[letra], positionsTable).length === LETTER_POSITION[letra].length
   }
 
   trackByNumber(item: number) {

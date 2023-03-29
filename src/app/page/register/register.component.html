@@ -6,7 +6,8 @@
         <label class="form-label font-weight-bold">
           Código Tabla
         </label>
-        <dx-text-box formControlName="codTabla"></dx-text-box>
+        <dx-text-box formControlName="codTabla"
+        ></dx-text-box>
       </div>
       <div class="mb-3">
         <label class="form-label font-weight-bold">
@@ -19,27 +20,20 @@
 
       <div class="d-flex gap-2">
 
-        <button class="button-with-icon">
-          <!-- Icon -->
-          ...
+        <dx-button stylingMode="outlined"
+                   text="Limpiar"
+                   type="normal"
+                   [width]="120"
+                   (onClick)="clearScreen()"
+        ></dx-button>
 
-          <!-- Label -->
-          <div class="button-with-icon__label">
-            Limpiar
-          </div>
-        </button>
+        <dx-button stylingMode="contained"
+                   text="Guardar"
+                   type="success"
+                   [width]="120"
+                   [useSubmitBehavior]="true"
+        ></dx-button>
 
-        <button type="reset"
-                (click)="clearScreen()"
-                class="btn btn-default">
-          Limpiar
-        </button>
-        <button type="submit"
-                [ngClass]="{'btn-disabled': formItem.invalid}"
-                [disabled]="formItem.invalid"
-                class="btn btn-primary">
-          Guardar
-        </button>
       </div>
 
     </form>

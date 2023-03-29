@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
 import {LocalStorageService} from "./local-storage.service";
 import {Table, TableStorage} from "../interfaces/table.interface";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
+import {map} from "rxjs/operators";
 
 const STORAGE_KEY: string = 'TABLA_KEY'
 
@@ -12,9 +13,16 @@ export class TablaService {
 
   tables: Map<string, TableStorage> = new Map<string, TableStorage>()
 
-  private sbjAvailableTables: BehaviorSubject<Table[]> = new BehaviorSubject<Table[]>([])
+  private sbjAvailableTables: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
 
   constructor(private storageService: LocalStorageService,) {
+  }
+
+  get availableTables$(): Observable<Table[]> {
+    return this.sbjAvailableTables.asObservable()
+      .pipe(
+        map(() => this.getTables()),
+      )
   }
 
   setTable(key: string, content: TableStorage) {
@@ -25,6 +33,7 @@ export class TablaService {
 
   deleteTable(key: string) {
     this.tables.delete(key)
+    this.sbjAvailableTables.next(true)
   }
 
   loadData() {
@@ -32,6 +41,7 @@ export class TablaService {
       .forEach(key => {
         this.tables.set(key, this.storageService.get(key))
       })
+    this.sbjAvailableTables.next(true)
   }
 
   get tableStorage() {
