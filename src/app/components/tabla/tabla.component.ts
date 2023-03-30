@@ -17,9 +17,10 @@ export class TablaComponent {
 
   @Input() nums: ItemNumber[] = []
   @Input() codTabla!: string
+  @Input() idTabla!: number
 
-  @Output() onEdit: EventEmitter<string> = new EventEmitter<string>()
-  @Output() onDelete: EventEmitter<string> = new EventEmitter<string>()
+  @Output() onEdit: EventEmitter<number> = new EventEmitter<number>()
+  @Output() onDelete: EventEmitter<number> = new EventEmitter<number>()
 
 
   playService: PlayService = inject(PlayService)

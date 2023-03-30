@@ -20,6 +20,7 @@
   <app-tabla *ngFor="let tabla of (tablesGame$ | async); trackBy:trackByTable"
              [nums]="tabla.numbers"
              [codTabla]="tabla.codTabla"
+             [idTabla]="tabla.id"
              (onEdit)="onEdit($event)"
              (onDelete)="onDelete($event)"
   ></app-tabla>

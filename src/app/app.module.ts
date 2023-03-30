@@ -7,6 +7,7 @@ import {PlayComponent} from "./page/play/play.component";
 import {TabsControlComponent} from './page/tabs-control/tabs-control.component';
 import {NumbersPlayedComponent} from './page/numbers-played/numbers-played.component';
 import {TablaComponent} from "./components/tabla/tabla.component";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import {TablaComponent} from "./components/tabla/tabla.component";
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

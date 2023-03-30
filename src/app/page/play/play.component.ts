@@ -5,6 +5,7 @@ import {LetraBingo, LetraPlayService} from "../../services/letra-play.service";
 import {TablaService} from "../../services/tabla.service";
 import {Table, TablePreview} from "../../interfaces/table.interface";
 import {Router} from "@angular/router";
+import {TableService} from "../../services/table.service";
 
 @Component({
   selector: 'app-play',
@@ -20,17 +21,20 @@ export class PlayComponent implements OnInit {
 
   constructor(private playService: PlayService,
               private tableService: TablaService,
+              private tbService: TableService,
               public letraPlayService: LetraPlayService,
               private router: Router) {
 
 
     this.tablesGame$ = combineLatest([
-      this.tableService.availableTables$,
+      // this.tableService.availableTables$,
+      this.tbService.all$,
       this.playService.numJugads$
     ], (tables, numbersOut) => {
       return tables.map(table => {
         return {
-          codTabla: table.codTabla,
+          id: table.id,
+          codTabla: table.codTable,
           numbers: table.data.map((_number, idx) => ({
             displayNumber: _number,
             position: idx,
@@ -39,8 +43,6 @@ export class PlayComponent implements OnInit {
         } as TablePreview
       })
     })
-
-    this.tablesGame = this.tableService.getTables()
   }
 
   ngOnInit(): void {
@@ -48,18 +50,20 @@ export class PlayComponent implements OnInit {
     this.numOut$ = this.playService.numJugads$
 
     this.letraPlay$ = this.letraPlayService.lettersAll$
+
+    // this.tbService.all$.subscribe(console.log)
   }
 
   letterDelete(letter: LetraBingo) {
     this.letraPlayService.setLetterPlayed(letter)
   }
 
-  onEdit(codTabla: string) {
-    this.router.navigate(['register', codTabla])
+  onEdit(idTabla: number) {
+    this.router.navigate(['register', idTabla])
   }
 
-  onDelete(codTabla: string) {
-    this.tableService.deleteTable(codTabla)
+  async onDelete(codTabla: number) {
+    await this.tbService.deleteTable(codTabla).toPromise()
   }
 
   trackByTable(index: number, item: TablePreview) {
