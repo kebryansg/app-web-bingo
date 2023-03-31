@@ -16,6 +16,7 @@ export class PlayComponent {
   tablesGame$: Observable<TablePreview[]>
 
   letraPlay$: Observable<LetraBingo[]>
+  countNumberPlayed$: Observable<number> = this.playService.countNumberPlayed$
 
   constructor(private playService: PlayService,
               private tableService: TablaService,

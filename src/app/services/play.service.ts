@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, Observable, of} from "rxjs";
 import {LocalStorageService} from "./local-storage.service";
 import {SelectionModel} from "@angular/cdk/collections";
+import {map} from "rxjs/operators";
 
 const STORAGE_NUMJUG: string = 'numJug'
 
@@ -9,6 +10,8 @@ const STORAGE_NUMJUG: string = 'numJug'
   providedIn: 'root'
 })
 export class PlayService {
+
+  numbersAll$ = of(generateNumbers())
 
   numbersPlayed = new SelectionModel<number>(true)
   private sbjNumJugados$: BehaviorSubject<number[]>
@@ -35,10 +38,28 @@ export class PlayService {
     return this.sbjNumJugados$.asObservable()
   }
 
+  get countNumberPlayed$(): Observable<number> {
+    return this.sbjNumJugados$.asObservable()
+      .pipe(
+        map(numbersPlayed => numbersPlayed.length)
+      )
+  }
+
   setNumberPlay(numero: number) {
     this.numbersPlayed.toggle(numero)
 
     this.setDataStorage()
     this.sbjNumJugados$.next([...this.numbersPlayed.selected])
   }
+
+  clearNumbersPlayed(){
+    this.numbersPlayed.clear()
+    this.sbjNumJugados$.next([])
+  }
+}
+
+
+const generateNumbers = () => {
+  return Array.from({length: 75})
+    .map((_value, idx) => (idx + 1))
 }

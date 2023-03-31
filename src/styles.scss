@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "assets/bootstrap-grid.min.css";
 @import "assets/icons/fontawesome/css/all.min.css";
+@import "assets/styles/button";
 
 .cursor-pointer {
   cursor: pointer
@@ -8,6 +9,17 @@
 
 .font-weight-bold {
   font-weight: bold
+}
+
+
+.text-align {
+  &-left {
+    text-align: left;
+  }
+
+  &-right {
+    text-align: right;
+  }
 }
 
 .f-14 {
@@ -26,9 +38,11 @@
   &-1 {
     gap: 10px;
   }
+
   &-2 {
     gap: 20px;
   }
+
   &-3 {
     gap: 30px;
   }

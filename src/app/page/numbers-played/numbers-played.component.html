@@ -1,7 +1,17 @@
-<h3>
-  Total números jugados:
-  <strong>{{ countNumberPlayed$ | async  }}</strong>
-</h3>
+<div class="row align-items-center">
+  <div class="col">
+    <h3>
+      Total números jugados:
+      <strong>{{ countNumberPlayed$ | async  }}</strong>
+    </h3>
+  </div>
+  <div class="col-4 text-align-right">
+    <button class="btn btn-primary" (click)="clearAllNumbers()">
+      Limpiar
+    </button>
+  </div>
+</div>
+
 
 <section class="container-numbers mt-4">
 

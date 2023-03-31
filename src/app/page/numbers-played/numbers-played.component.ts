@@ -1,7 +1,6 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {PlayService} from "../../services/play.service";
-import {combineLatest, Observable, of} from "rxjs";
-import {map} from "rxjs/operators";
+import {combineLatest, Observable} from "rxjs";
 
 interface NumberPlayed {
   display: number;
@@ -18,14 +17,11 @@ export class NumbersPlayedComponent {
 
   numbersDisplay$: Observable<NumberPlayed[]>
 
-  countNumberPlayed$: Observable<number> = this.playService.numJugads$
-    .pipe(
-      map(numbersPlayed => numbersPlayed.length)
-    )
+  countNumberPlayed$: Observable<number> = this.playService.countNumberPlayed$
 
   constructor(private playService: PlayService) {
     this.numbersDisplay$ = combineLatest([
-        of(this.generateNumbers()),
+        this.playService.numbersAll$,
         this.playService.numJugads$
       ],
       (numbers, numbersPlayed) => {
@@ -37,9 +33,8 @@ export class NumbersPlayedComponent {
     )
   }
 
-  generateNumbers() {
-    return Array.from({length: 75})
-      .map((_value, idx) => (idx + 1))
+  clearAllNumbers() {
+    this.playService.clearNumbersPlayed()
   }
 
   pushSelect(num: number) {

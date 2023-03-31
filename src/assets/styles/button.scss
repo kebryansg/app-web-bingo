@@ -1,0 +1,64 @@
+// Variables de colores
+$primary-color: #2563eb;
+$primary-border-color: #1d4ed8;
+$default-color: #f9fafb;
+$default-border-color: #d2d6dc;
+$default-text-color: #1f2937;
+$success-color: #059669;
+$success-border-color: #047857;
+$tw-bg-opacity: 0.75;
+
+// Estilos de botones
+.btn {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+  border-radius: 0.375rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-width: 1px;
+  border-style: solid;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, color 0.15s ease-in-out;
+
+  &-primary {
+    background-color: $primary-color;
+    border-color: $primary-border-color;
+    color: #ffffff;
+  }
+
+  &-default {
+    background-color: $default-color;
+    border-color: $default-border-color;
+    color: $default-text-color;
+
+    &:hover:not([disabled]) {
+      background-color: rgba(229, 231, 235, $tw-bg-opacity);
+    }
+  }
+
+  &-success {
+    background-color: $success-color;
+    border-color: $success-border-color;
+    color: #ffffff;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:hover:not([disabled]) {
+    opacity: $tw-bg-opacity;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.45);
+  }
+
+  &:active {
+    background-color: rgba(37, 99, 235, 0.75);
+    border-color: rgba(37, 99, 235, 0.75);
+  }
+}
