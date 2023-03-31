@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable, of} from "rxjs";
+import {BehaviorSubject, combineLatest, Observable, of} from "rxjs";
 import {map} from "rxjs/operators";
 import {LocalStorageService} from "./local-storage.service";
 import {SelectionModel} from "@angular/cdk/collections";
+import {ItemPlayed} from "../interfaces/item-played.interface";
 
 const STORAGE_LETJUG: string = 'letJug'
 const LETRAS: LetraBingo[] = ["T", "L", "C", "A", "F", "E", "D", "I", "O", "U", "H", "P"]
@@ -39,13 +40,18 @@ export class LetraPlayService {
     this.setDataStorage()
   }
 
-  get selectionModel(): SelectionModel<LetraBingo> {
-    return this.lettersPlayed
+  get lettersAll$(): Observable<ItemPlayed<LetraBingo>[]> {
+    return combineLatest([
+      of([...LETRAS]),
+      this.availableLetters$
+    ], (letters, availableLetters) => {
+      return letters.map(letter => ({
+        display: letter,
+        isSelected: !availableLetters.includes(letter)
+      }))
+    })
   }
 
-  get lettersAll$(): Observable<LetraBingo[]> {
-    return of([...LETRAS])
-  }
 
   get availableLetters$(): Observable<LetraBingo[]> {
     return this.sbjAvailableLetters.asObservable()

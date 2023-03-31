@@ -1,11 +1,8 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {PlayService} from "../../services/play.service";
 import {combineLatest, Observable} from "rxjs";
+import {ItemPlayed} from "../../interfaces/item-played.interface";
 
-interface NumberPlayed {
-  display: number;
-  isSelected: boolean;
-}
 
 @Component({
   selector: 'app-numbers-played',
@@ -15,7 +12,7 @@ interface NumberPlayed {
 })
 export class NumbersPlayedComponent {
 
-  numbersDisplay$: Observable<NumberPlayed[]>
+  numbersDisplay$: Observable<ItemPlayed<number>[]>
 
   countNumberPlayed$: Observable<number> = this.playService.countNumberPlayed$
 

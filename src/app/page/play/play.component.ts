@@ -6,6 +6,8 @@ import {TablaService} from "../../services/tabla.service";
 import {TablePreview} from "../../interfaces/table.interface";
 import {Router} from "@angular/router";
 import {TableService} from "../../services/table.service";
+import {ItemPlayed} from "../../interfaces/item-played.interface";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-play',
@@ -15,15 +17,19 @@ import {TableService} from "../../services/table.service";
 export class PlayComponent {
   tablesGame$: Observable<TablePreview[]>
 
-  letraPlay$: Observable<LetraBingo[]>
+  lettersDisplay$: Observable<ItemPlayed<LetraBingo>[]>
+  countLettersPlayed$: Observable<number>
   countNumberPlayed$: Observable<number> = this.playService.countNumberPlayed$
 
   constructor(private playService: PlayService,
               private tableService: TablaService,
               private tbService: TableService,
-              public letraPlayService: LetraPlayService,
+              private letraPlayService: LetraPlayService,
               private router: Router) {
-    this.letraPlay$ = this.letraPlayService.lettersAll$
+    this.lettersDisplay$ = letraPlayService.lettersAll$
+    this.countLettersPlayed$ = letraPlayService.lettersAll$.pipe(
+      map(letters => letters.filter(letter => !letter.isSelected).length)
+    )
 
     this.tablesGame$ = combineLatest([
       this.tbService.all$,

@@ -1,14 +1,16 @@
 <section class="mt-3">
 
   <div class="mt-xs-3">
-    <div class="col" *ngIf="(letraPlay$ | async) as letraPlay">
-      <h4>Letras en juego <strong>{{letraPlay.length}}</strong></h4>
+    <div class="col" *ngIf="(lettersDisplay$ | async) as letraPlay">
+      <h4>Letras en juego:
+        <strong>{{countLettersPlayed$ | async}}</strong>
+      </h4>
       <div class="w-100 content-letter">
         <div class="letter"
              *ngFor="let letra of letraPlay"
-             [class.letter--active]="letraPlayService.selectionModel.isSelected(letra)"
-             (click)="letterDelete(letra)">
-          {{letra}}
+             [class.letter--active]="letra.isSelected"
+             (click)="letterDelete(letra.display)">
+          {{letra.display}}
         </div>
       </div>
     </div>
