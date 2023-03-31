@@ -1,13 +1,15 @@
 <h3>
-  Total números jugados: <strong>{{ playService.selectionModel.selected.length  }}</strong>
+  Total números jugados:
+  <strong>{{ countNumberPlayed$ | async  }}</strong>
 </h3>
 
 <section class="container-numbers mt-4">
 
-  <div *ngFor="let num of numbersAll"
+  <div *ngFor="let _num of numbersDisplay$ | async"
        class="number"
-       [class.number--active]="playService.selectionModel.isSelected(num)"
-       (click)="pushSelect(num)">
-    {{num}}
+       [class.number--active]="_num.isSelected"
+       (click)="pushSelect(_num.display)">
+    {{_num.display}}
   </div>
+
 </section>

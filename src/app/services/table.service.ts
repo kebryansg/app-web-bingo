@@ -14,7 +14,7 @@ export class TableService {
 
   all$ = this.httpClient.get<TableView[]>(`${this.apiUrl}/table`)
     .pipe(
-      timeout(5000),
+      // timeout(5000),
       retry(3)
     )
 
