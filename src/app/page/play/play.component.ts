@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {PlayService} from "../../services/play.service";
 import {combineLatest, Observable} from "rxjs";
 import {LetraBingo, LetraPlayService} from "../../services/letra-play.service";
 import {TablaService} from "../../services/tabla.service";
-import {Table, TablePreview} from "../../interfaces/table.interface";
+import {TablePreview} from "../../interfaces/table.interface";
 import {Router} from "@angular/router";
 import {TableService} from "../../services/table.service";
 
@@ -12,46 +12,38 @@ import {TableService} from "../../services/table.service";
   templateUrl: './play.component.html',
   styleUrls: ['./play.component.scss']
 })
-export class PlayComponent implements OnInit {
+export class PlayComponent {
   tablesGame$: Observable<TablePreview[]>
-  tablesGame!: Table[]
 
-  numOut$!: Observable<number[]>
-  letraPlay$!: Observable<LetraBingo[]>
+  letraPlay$: Observable<LetraBingo[]>
 
   constructor(private playService: PlayService,
               private tableService: TablaService,
               private tbService: TableService,
               public letraPlayService: LetraPlayService,
               private router: Router) {
-
+    this.letraPlay$ = this.letraPlayService.lettersAll$
 
     this.tablesGame$ = combineLatest([
-      // this.tableService.availableTables$,
       this.tbService.all$,
       this.playService.numJugads$
     ], (tables, numbersOut) => {
       return tables.map(table => {
+        const numbers = table.data.map((_number, idx) => ({
+          displayNumber: _number,
+          position: idx,
+          isSelected: numbersOut.includes(_number)
+        }))
         return {
           id: table.id,
           codTabla: table.codTable,
-          numbers: table.data.map((_number, idx) => ({
-            displayNumber: _number,
-            position: idx,
-            isSelected: numbersOut.includes(_number)
-          }))
+          numbersPlayed: numbers.reduce(
+            (acc, _number) => acc + (_number.isSelected ? 1 : 0)
+            , 0),
+          numbers,
         } as TablePreview
-      })
-    })
-  }
-
-  ngOnInit(): void {
-
-    this.numOut$ = this.playService.numJugads$
-
-    this.letraPlay$ = this.letraPlayService.lettersAll$
-
-    // this.tbService.all$.subscribe(console.log)
+      }).sort((a, b) => b.numbersPlayed - a.numbersPlayed)
+    });
   }
 
   letterDelete(letter: LetraBingo) {

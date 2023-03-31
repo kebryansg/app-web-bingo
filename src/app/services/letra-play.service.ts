@@ -1,22 +1,11 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable, of, pluck} from "rxjs";
+import {BehaviorSubject, Observable, of} from "rxjs";
 import {map} from "rxjs/operators";
 import {LocalStorageService} from "./local-storage.service";
 import {SelectionModel} from "@angular/cdk/collections";
 
 const STORAGE_LETJUG: string = 'letJug'
-const LETRAS: LetraBingo[] = ["T"
-  , "L"
-  , "C"
-  , "A"
-  , "F"
-  , "E"
-  , "D"
-  , "I"
-  , "O"
-  , "U"
-  , "H"
-  , "P"]
+const LETRAS: LetraBingo[] = ["T", "L", "C", "A", "F", "E", "D", "I", "O", "U", "H", "P"]
 
 @Injectable({
   providedIn: 'root'
@@ -70,15 +59,4 @@ export class LetraPlayService {
 }
 
 
-export type LetraBingo = "T"
-  | "L"
-  | "C"
-  | "A"
-  | "F"
-  | "E"
-  | "D"
-  | "I"
-  | "O"
-  | "U"
-  | "H"
-  | "P"
+export type LetraBingo = "T" | "L" | "C" | "A" | "F" | "E" | "D" | "I" | "O" | "U" | "H" | "P"

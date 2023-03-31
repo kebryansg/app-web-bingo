@@ -2,7 +2,7 @@
 
   <div class="mt-xs-3">
     <div class="col" *ngIf="(letraPlay$ | async) as letraPlay">
-      <span class="h4"> Letras en juego ({{letraPlay.length}}) </span>
+      <h4>Letras en juego <strong>{{letraPlay.length}}</strong></h4>
       <div class="w-100 content-letter">
         <div class="letter"
              *ngFor="let letra of letraPlay"
@@ -18,8 +18,6 @@
 </section>
 <div class="mt-4 content-table">
 
-<!--  <app-spinner></app-spinner>-->
-
   <ng-container *ngIf="(tablesGame$ | async) as tables; else tmplSpinner">
     <app-tabla *ngFor="let tabla of tables; trackBy:trackByTable"
                [nums]="tabla.numbers"
@@ -29,6 +27,7 @@
                (onDelete)="onDelete($event)"
     ></app-tabla>
   </ng-container>
+
 </div>
 
 <ng-template #tmplSpinner>

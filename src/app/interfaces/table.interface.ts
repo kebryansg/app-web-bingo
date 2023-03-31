@@ -31,7 +31,8 @@ export interface CrudTable {
 export interface TablePreview {
   codTabla: string;
   id: number;
-  numbers: ItemNumber[]
+  numbers: ItemNumber[],
+  numbersPlayed: number,
 }
 
 export interface TableStorage extends Omit<Table, 'codTabla'> {
