@@ -1,0 +1,27 @@
+.letter-avatar {
+  /* Center the content */
+  align-items: center;
+  display: flex;
+  justify-content: center;
+
+  /* Colors */
+  background: rgba(188, 237, 243, 0.889);
+  color: #fff;
+  font-weight: bold;
+
+  /* Rounded border */
+  border-radius: 50%;
+  height: 2rem;
+  width: 2rem;
+  animation: breathe 5s linear infinite;
+}
+
+// background: linear-gradient(#33ccff, #ff0066);
+@keyframes breathe {
+  0% {
+    box-shadow: 0 0 0 8px  rgba(188, 237, 243, 0.3);
+    background-color: #0a58ca;
+
+  }
+}
+

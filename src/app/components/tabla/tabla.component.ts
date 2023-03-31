@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output}
 import {LETTER_POSITION} from '../../const/letters-position.const';
 import {LetraBingo, LetraPlayService} from "../../services/letra-play.service";
 import {PlayService} from "../../services/play.service";
-import {combineLatest} from "rxjs";
+import {combineLatest, Observable} from "rxjs";
 import {ItemNumber} from "../../interfaces/table.interface";
 import {map} from "rxjs/operators";
 import {getIntersection} from "../../utils/array.util";
@@ -11,7 +11,7 @@ import {getIntersection} from "../../utils/array.util";
   selector: 'app-tabla',
   templateUrl: './tabla.component.html',
   styleUrls: ['./tabla.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TablaComponent {
 
@@ -26,7 +26,7 @@ export class TablaComponent {
   playService: PlayService = inject(PlayService)
   letraPlayService: LetraPlayService = inject(LetraPlayService)
 
-  get lettersPlayed$() {
+  get lettersPlayed$() : Observable<LetraBingo[]> {
     return combineLatest([
       this.playService.numJugads$,
       this.letraPlayService.availableLetters$

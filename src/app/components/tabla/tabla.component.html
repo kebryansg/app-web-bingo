@@ -21,6 +21,8 @@
     {{num.displayNumber}}
   </div>
 </div>
-<div class="w-100">
-  Letra -> {{ lettersPlayed$ | async}}
+<div class="w-100 container-letters">
+  <app-letter *ngFor="let letter of lettersPlayed$ | async"
+              [letter]="letter"
+  ></app-letter>
 </div>

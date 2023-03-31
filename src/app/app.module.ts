@@ -8,19 +8,23 @@ import {TabsControlComponent} from './page/tabs-control/tabs-control.component';
 import {NumbersPlayedComponent} from './page/numbers-played/numbers-played.component';
 import {TablaComponent} from "./components/tabla/tabla.component";
 import {HttpClientModule} from "@angular/common/http";
+import {LetterComponent} from "./components/letter/letter.component";
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PlayComponent,
     TablaComponent,
+    LetterComponent,
+    SpinnerComponent,
     TabsControlComponent,
-    NumbersPlayedComponent
+    NumbersPlayedComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

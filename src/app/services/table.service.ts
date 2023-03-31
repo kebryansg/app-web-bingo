@@ -2,7 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {CreateDtoTable, CrudTable, TableResponse, TableView} from "../interfaces/table.interface";
-import {Observable} from "rxjs";
+import {Observable, retry, timeout} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,10 @@ export class TableService {
   httpClient = inject(HttpClient)
 
   all$ = this.httpClient.get<TableView[]>(`${this.apiUrl}/table`)
+    .pipe(
+      timeout(5000),
+      retry(3)
+    )
 
   getTableById(idTable: number): Observable<TableView> {
     return this.httpClient.get<TableView>(`${this.apiUrl}/table/${idTable}`)
