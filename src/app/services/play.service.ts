@@ -35,10 +35,6 @@ export class PlayService {
     return this.sbjNumJugados$.asObservable()
   }
 
-  get selectionModel(): SelectionModel<number> {
-    return this.numbersPlayed
-  }
-
   setNumberPlay(numero: number) {
     this.numbersPlayed.toggle(numero)
 
