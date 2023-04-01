@@ -3,7 +3,7 @@ import {provideHttpClient} from "@angular/common/http";
 import {bootstrapApplication} from "@angular/platform-browser";
 import {provideAnimations} from "@angular/platform-browser/animations";
 import {AppComponent} from "./app/app.component";
-import {provideRouter} from "@angular/router";
+import {provideRouter, withHashLocation} from "@angular/router";
 import {routes} from "./app/app-routing";
 
 
@@ -13,7 +13,7 @@ themes.initialized(() => {
     providers: [
       provideAnimations(),
       provideHttpClient(),
-      provideRouter(routes)
+      provideRouter(routes, withHashLocation())
     ]
   }).catch(err => console.error(err));
 });
