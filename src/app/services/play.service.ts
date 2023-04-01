@@ -52,9 +52,10 @@ export class PlayService {
     this.sbjNumJugados$.next([...this.numbersPlayed.selected])
   }
 
-  clearNumbersPlayed(){
+  clearNumbersPlayed() {
     this.numbersPlayed.clear()
     this.sbjNumJugados$.next([])
+    this.setDataStorage()
   }
 }
 

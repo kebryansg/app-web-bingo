@@ -8,8 +8,19 @@ import {Router} from "@angular/router";
 import {TableService} from "../../services/table.service";
 import {ItemPlayed} from "../../interfaces/item-played.interface";
 import {map} from "rxjs/operators";
+import {AsyncPipe, NgFor, NgIf} from "@angular/common";
+import {SpinnerComponent} from "../../components/spinner/spinner.component";
+import {TablaComponent} from "../../components/tabla/tabla.component";
 
 @Component({
+  standalone: true,
+  imports:[
+    SpinnerComponent,
+    TablaComponent,
+    NgFor,
+    NgIf,
+    AsyncPipe
+  ],
   selector: 'app-play',
   templateUrl: './play.component.html',
   styleUrls: ['./play.component.scss']

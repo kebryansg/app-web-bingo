@@ -6,10 +6,18 @@ import {combineLatest, Observable} from "rxjs";
 import {ItemNumber} from "../../interfaces/table.interface";
 import {map} from "rxjs/operators";
 import {getIntersection} from "../../utils/array.util";
+import {AsyncPipe, NgFor} from "@angular/common";
+import {LetterComponent} from "../letter/letter.component";
 
 @Component({
+  standalone: true,
   selector: 'app-tabla',
   templateUrl: './tabla.component.html',
+  imports:[
+    NgFor,
+    AsyncPipe,
+    LetterComponent
+  ],
   styleUrls: ['./tabla.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -26,7 +34,7 @@ export class TablaComponent {
   playService: PlayService = inject(PlayService)
   letraPlayService: LetraPlayService = inject(LetraPlayService)
 
-  get lettersPlayed$() : Observable<LetraBingo[]> {
+  get lettersPlayed$(): Observable<LetraBingo[]> {
     return combineLatest([
       this.playService.numJugads$,
       this.letraPlayService.availableLetters$
