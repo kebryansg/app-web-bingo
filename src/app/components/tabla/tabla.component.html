@@ -1,15 +1,24 @@
 <div class="w-100 d-flex justify-content-between align-items-center mt-3 mb-2">
-  <label class="text-danger font-weight-bold f-14">
+  <label class="text-primary font-weight-bold f-14">
     # {{codTabla}}
   </label>
 
   <div>
-    <i class="fa fa-edit fa-2x cursor-pointer text-primary me-2"
-       (click)="onEdit.emit(idTabla)"
-    ></i>
-    <i class="fa fa-trash fa-2x cursor-pointer text-danger "
-       (click)="onDelete.emit(idTabla)"
-    ></i>
+
+    <span class="font-weight-bold">
+      <span class="text-danger">{{countNumbersSelect$ | async}}</span>/29
+    </span>
+
+    <dx-drop-down-button
+      [dropDownOptions]="{ width: 230 }"
+      icon="preferences"
+      [items]="downloads"
+      displayExpr="name"
+      keyExpr="value"
+      (onItemClick)="onItemClick($event)"
+    ></dx-drop-down-button>
+
+
   </div>
 
 </div>

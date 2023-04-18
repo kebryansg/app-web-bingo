@@ -8,14 +8,16 @@ import {map} from "rxjs/operators";
 import {getIntersection} from "../../utils/array.util";
 import {AsyncPipe, NgFor} from "@angular/common";
 import {LetterComponent} from "../letter/letter.component";
+import {DxDropDownButtonModule} from "devextreme-angular";
 
 @Component({
   standalone: true,
   selector: 'app-tabla',
   templateUrl: './tabla.component.html',
-  imports:[
+  imports: [
     NgFor,
     AsyncPipe,
+    DxDropDownButtonModule,
     LetterComponent
   ],
   styleUrls: ['./tabla.component.scss'],
@@ -33,6 +35,17 @@ export class TablaComponent {
 
   playService: PlayService = inject(PlayService)
   letraPlayService: LetraPlayService = inject(LetraPlayService)
+  downloads = [
+    {value: 1, name: 'Editar', icon: 'edit'},
+    {value: 2, name: 'Eliminar', icon: 'trash'},
+  ];
+
+  countNumbersSelect$ = this.playService.numJugads$
+    .pipe(
+      map(
+        () => this.nums.reduce((acum, num) => acum += (num.isSelected ? 1 : 0), 0)
+      )
+    )
 
   get lettersPlayed$(): Observable<LetraBingo[]> {
     return combineLatest([
@@ -42,10 +55,6 @@ export class TablaComponent {
       .pipe(
         map((lettersPlayed) => lettersPlayed.filter(letter => this.compareLetra(letter))),
       )
-  }
-
-  get codeTable() {
-    return `${this.codTabla.split('_')[1]}`
   }
 
   compareLetra(letra: LetraBingo): boolean {
@@ -60,4 +69,11 @@ export class TablaComponent {
     return item
   }
 
+  onItemClick($event: any) {
+    const {itemData} = $event
+
+    if (itemData.value === 1) this.onEdit.emit(this.idTabla)
+    else this.onDelete.emit(this.idTabla)
+
+  }
 }
