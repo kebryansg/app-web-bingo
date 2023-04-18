@@ -54,7 +54,7 @@ export class PlayComponent {
         }))
         return {
           id: table.id,
-          codTabla: table.codTable,
+          codTable: table.codTable,
           numbersPlayed: numbers.reduce(
             (acc, _number) => acc + (_number.isSelected ? 1 : 0)
             , 0),
@@ -77,7 +77,7 @@ export class PlayComponent {
   }
 
   trackByTable(index: number, item: TablePreview) {
-    return item.codTabla
+    return item.codTable
   }
 
 }

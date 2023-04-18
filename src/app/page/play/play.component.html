@@ -32,7 +32,7 @@
   <ng-container *ngIf="(tablesGame$ | async) as tables; else tmplSpinner">
     <app-tabla *ngFor="let tabla of tables; trackBy:trackByTable"
                [nums]="tabla.numbers"
-               [codTabla]="tabla.codTabla"
+               [codTabla]="tabla.codTable"
                [idTabla]="tabla.id"
                (onEdit)="onEdit($event)"
                (onDelete)="onDelete($event)"

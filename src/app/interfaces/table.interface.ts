@@ -29,7 +29,7 @@ export interface CrudTable {
 
 
 export interface TablePreview {
-  codTabla: string;
+  codTable: string;
   id: number;
   numbers: ItemNumber[],
   numbersPlayed: number,
