@@ -43,7 +43,7 @@ export class PlayComponent {
     )
 
     this.tablesGame$ = combineLatest([
-      this.tbService.all$,
+      this.tbService.allTable$,
       this.playService.numJugads$
     ], (tables, numbersOut) => {
       return tables.map(table => {
@@ -74,12 +74,16 @@ export class PlayComponent {
 
   async onDelete(codTabla: number) {
     await this.tbService.deleteTable(codTabla).toPromise()
+    this.tbService.refreshTables()
   }
 
   trackByTable(index: number, item: TablePreview) {
     return item.codTable
   }
 
+  refreshItems() {
+    this.tbService.refreshTables()
+  }
 }
 
 

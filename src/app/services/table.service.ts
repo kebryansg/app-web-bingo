@@ -2,7 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {CreateDtoTable, CrudTable, TableResponse, TableView} from "../interfaces/table.interface";
-import {Observable, retry, shareReplay} from "rxjs";
+import {BehaviorSubject, Observable, retry, shareReplay, switchMap} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +12,23 @@ export class TableService {
 
   httpClient = inject(HttpClient)
 
-  all$ = this.httpClient.get<TableView[]>(`${this.apiUrl}/table`)
+  reloadCacheSubject = new BehaviorSubject(null);
+  private all$ = this.httpClient.get<TableView[]>(`${this.apiUrl}/table`)
     .pipe(
       retry(3),
-      shareReplay({refCount: true, bufferSize: 1})
+      // shareReplay({refCount: true, bufferSize: 1})
     )
+
+  allTable$ = this.reloadCacheSubject
+    .asObservable()
+    .pipe(
+      switchMap(() => this.all$),
+      shareReplay(1),
+    )
+
+  refreshTables() {
+    this.reloadCacheSubject.next(null)
+  }
 
   getTableById(idTable: number): Observable<TableView> {
     return this.httpClient.get<TableView>(`${this.apiUrl}/table/${idTable}`)
