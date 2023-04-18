@@ -6,7 +6,9 @@ import {SelectionModel} from "@angular/cdk/collections";
 import {ItemPlayed} from "../interfaces/item-played.interface";
 
 const STORAGE_LETJUG: string = 'letJug'
-const LETRAS: LetraBingo[] = ["T", "L", "C", "A", "F", "E", "D", "I", "O", "U", "H", "P"]
+const LETRAS: LetraBingo[] = ["A", "C", "D", "E", "F", "G", "H", "I", "K", "L", "M", "N", "U", "V", "Z"]
+
+// ["T", "L", "C", "A", "F", "E", "D", "I", "O", "U", "H", "P"]
 
 @Injectable({
   providedIn: 'root'
@@ -65,4 +67,24 @@ export class LetraPlayService {
 }
 
 
-export type LetraBingo = "T" | "L" | "C" | "A" | "F" | "E" | "D" | "I" | "O" | "U" | "H" | "P"
+export type LetraBingo =
+  "A"
+  | "B"
+  | "C"
+  | "D"
+  | "E"
+  | "F"
+  | "G"
+  | "H"
+  | "I"
+  | "J"
+  | "K"
+  | "L"
+  | "M"
+  | "N"
+  | "U"
+  | "V"
+  | "Z"
+  | "T"
+  | "O"
+  | "P";

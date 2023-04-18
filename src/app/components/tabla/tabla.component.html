@@ -16,7 +16,7 @@
 
 <div class="tabla">
   <div class="tabla__number"
-       *ngFor="let num of nums; trackBy: trackByNumber"
+       *ngFor="let num of nums; trackBy: trackByNumber; let idx = index"
        [class.tabla__number--is]="num.isSelected">
     {{num.displayNumber}}
   </div>
