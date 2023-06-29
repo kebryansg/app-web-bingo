@@ -3,6 +3,7 @@ import {PlayService} from "../../services/play.service";
 import {combineLatest, Observable} from "rxjs";
 import {ItemPlayed} from "../../interfaces/item-played.interface";
 import {AsyncPipe, NgFor} from "@angular/common";
+import {toSignal} from "@angular/core/rxjs-interop";
 
 @Component({
   standalone: true,
@@ -31,7 +32,9 @@ export default class NumbersPlayedComponent {
     }
   )
 
-  countNumberPlayed$: Observable<number> = this.playService.countNumberPlayed$
+  countNumberPlayed = toSignal(this.playService.countNumberPlayed$, {
+    initialValue: 0
+  })
 
   clearAllNumbers() {
     this.playService.clearNumbersPlayed()
