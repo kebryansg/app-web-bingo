@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import {Observable, of} from 'rxjs';
 import {TablaService} from "../services/tabla.service";
 import {PlayService} from "../services/play.service";
@@ -8,7 +8,7 @@ import {LetraPlayService} from "../services/letra-play.service";
 @Injectable({
   providedIn: 'root'
 })
-export class TablesGameResolver implements Resolve<any> {
+export class TablesGameResolver  {
 
   tablaService: TablaService = inject(TablaService)
   playService: PlayService = inject(PlayService)

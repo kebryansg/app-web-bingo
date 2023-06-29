@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import {Observable, throwError} from 'rxjs';
 import {TableView} from "../interfaces/table.interface";
 import {TableService} from "../services/table.service";
 
 @Injectable({providedIn: 'root'})
-export class TablaResolver implements Resolve<TableView> {
+export class TablaResolver  {
   constructor(private tableService: TableService) {
   }
 
